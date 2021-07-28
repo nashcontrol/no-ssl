@@ -26,3 +26,6 @@ jobs:
       
     - name: GoReleaser Action
       uses: goreleaser/goreleaser-action@v2.7.0
+      with:
+          version: latest
+          args: release --rm-dist
