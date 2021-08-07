@@ -42,6 +42,18 @@ func TestNoTLS11_1(t *testing.T) {
 	}
 }
 
+func TestNoTLS11_2(t *testing.T) {
+	in := strings.NewReader("https://www.registrocivil.cl")
+	var out bytes.Buffer
+	run(in, &out)
+
+	expectedOutput := "Server https://www.registrocivil.cl supports TLS 1.1"
+
+	if strings.TrimRight(out.String(), "\n\n") != expectedOutput {
+		t.Errorf("expected %s to be equal to %s", out.String(), expectedOutput)
+	}
+}
+
 func TestTLS12_1(t *testing.T) {
 	in := strings.NewReader("https://www.ssllabs.com")
 	var out bytes.Buffer
