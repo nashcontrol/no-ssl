@@ -31,11 +31,11 @@ func TestNoTLSv1_0_TEST2(t *testing.T) {
 }
 
 func TestNoTLSv1_1_TEST1(t *testing.T) {
-	in := strings.NewReader("https://kuwaitairways.com:443")
+	in := strings.NewReader("https://stratosphere.lat:443")
 	var out bytes.Buffer
 	run(in, &out)
 
-	expectedOutput := "Server https://kuwaitairways.com:443 supports TLS 1.1"
+	expectedOutput := "Server https://stratosphere.lat:443 supports TLS 1.1"
 
 	if strings.TrimRight(out.String(), "\n\n") != expectedOutput {
 		t.Errorf("expected %s to be equal to %s", out.String(), expectedOutput)
