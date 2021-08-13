@@ -5,8 +5,9 @@ import (
 	"crypto/tls"
 	"fmt"
 	"io"
-	"net/http"
+	"net"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -21,56 +22,51 @@ func run(in io.Reader, out io.Writer) {
 	for sc.Scan() {
 		url := sc.Text()
 
+		// normalize input: remove https://, add port 443 if not present, as we are creating a Dialer (TLS connection), not Client object (TLS client side connection)
+		if strings.HasPrefix(url, "https") {
+			url = string(url[8:])
+		}
+		if !strings.Contains(url, ":") {
+			url += ":443"
+		}
+
+		dialer := &net.Dialer{
+			Timeout: time.Duration(3 * time.Second),
+		}
+
 		// try TLS 1.0 first
-		client := no_ssl(tls.VersionTLS10)
-		_, err := client.Get(url)
+		tlsConfig := no_ssl_config(tls.VersionTLS10)
+		conn, err := tls.DialWithDialer(dialer, "tcp", url, tlsConfig)
 
-		// success if there was no TLS connection error, meaning that server does indeed support connection with TLSv1.0 as max version
+		if conn != nil {
+			conn.Close()
+		}
+
 		if err == nil {
-			fmt.Fprintf(out, "Server %s supports TLS 1.0\n", url)
+			fmt.Fprintf(out, "Server https://%s supports TLS 1.0\n", url)
 		} else {
-
 			// now try with TLS 1.1
-			client := no_ssl(tls.VersionTLS11)
-			_, err := client.Get(url)
+			tlsConfig = no_ssl_config(tls.VersionTLS11)
+			conn, err = tls.DialWithDialer(dialer, "tcp", url, tlsConfig)
+
+			if conn != nil {
+				conn.Close()
+			}
 
 			if err == nil {
-
-				fmt.Fprintf(out, "Server %s supports TLS 1.1\n", url)
+				fmt.Fprintf(out, "Server https://%s supports TLS 1.1\n", url)
 			}
 		}
-		no_ssl(tls.VersionTLS11)
 
 	}
 }
 
-func no_ssl(version uint16) *http.Client {
+func no_ssl_config(version uint16) *tls.Config {
 
-	// set request timeout
-	timeout := time.Duration(2 * time.Second)
-
-	// do not follow redirects
-	re := func(req *http.Request, via []*http.Request) error {
-		return http.ErrUseLastResponse
+	tlsConfig := &tls.Config{
+		InsecureSkipVerify: true,
+		MaxVersion:         version,
 	}
 
-	// run test on TLS version
-	tr := &http.Transport{
-		MaxIdleConns:      30,
-		IdleConnTimeout:   time.Second,
-		DisableKeepAlives: true,
-		TLSClientConfig: &tls.Config{
-			InsecureSkipVerify: true,
-
-			MaxVersion: version},
-		Proxy: http.ProxyFromEnvironment,
-	}
-
-	client := &http.Client{
-		Transport:     tr,
-		CheckRedirect: re,
-		Timeout:       timeout,
-	}
-
-	return client
+	return tlsConfig
 }

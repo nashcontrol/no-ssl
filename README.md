@@ -18,8 +18,16 @@ example.com
 example.edu
 example.net
 cat domains.txt | httprobe -s -p https:443 --prefer-https | no-ssl
-Server https://example.com supports TLS 1.0
-Server https://example.net supports TLS 1.0
+Server https://example.com:443 supports TLS 1.0
+Server https://example.net:443 supports TLS 1.1
+```
+
+It is also possibe to run no-ssl directly with the list of targets, but results may be slower as some hosts might not resolve
+
+```
+cat domains.txt | no-ssl
+Server https://example.com:443 supports TLS 1.0
+Server https://example.net:443 supports TLS 1.1
 ```
 
 ## Inspired by
