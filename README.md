@@ -1,6 +1,6 @@
 # no-ssl
 
-Take a list of domains and probe for support of TLS 1.0.
+Take a list of domains and probes for support of legacy TLS 1.0 and TLS 1.1 protocols.
 
 ## Install
 
@@ -17,7 +17,7 @@ no-ssl accepts line-delimited domains (prefixed with HTTPS) on `stdin`. It is be
 example.com
 example.edu
 example.net
-cat domains.txt | httprobe -s -p https:443 --prefer-https | no-ssl
+cat domains.txt | httprobe -s -p https:443 | no-ssl
 Server https://example.com:443 supports TLS 1.0
 Server https://example.net:443 supports TLS 1.1
 ```
