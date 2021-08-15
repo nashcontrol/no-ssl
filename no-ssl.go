@@ -43,7 +43,7 @@ func run(in io.Reader, out io.Writer) {
 		}
 
 		if err == nil {
-			fmt.Fprintf(out, "Server https://%s supports TLS 1.0\n", url)
+			fmt.Fprintf(out, "https://%s [TLS 1.0]\n", url)
 		} else {
 			// now try with TLS 1.1
 			tlsConfig = no_ssl_config(tls.VersionTLS11)
@@ -54,7 +54,7 @@ func run(in io.Reader, out io.Writer) {
 			}
 
 			if err == nil {
-				fmt.Fprintf(out, "Server https://%s supports TLS 1.1\n", url)
+				fmt.Fprintf(out, "https://%s [TLS 1.1]\n", url)
 			}
 		}
 

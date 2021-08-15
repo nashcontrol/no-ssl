@@ -57,7 +57,7 @@ EKTcWGekdmdDPsHloRNtsiCa697B2O9IFA==
 
 	srv.Close()
 
-	expectedOutput := "Server https://localhost:2000 supports TLS 1.1"
+	expectedOutput := "https://localhost:2000 [TLS 1.1]"
 
 	if strings.TrimRight(out.String(), "\n\n") != expectedOutput {
 		t.Errorf("expected %s to be equal to %s", out.String(), expectedOutput)
@@ -68,7 +68,7 @@ func TestNoTLSv1_0_TEST1(t *testing.T) {
 	var out bytes.Buffer
 	run(in, &out)
 
-	expectedOutput := "Server https://www.yahoo.com:443 supports TLS 1.0"
+	expectedOutput := "https://www.yahoo.com:443 [TLS 1.0]"
 
 	if strings.TrimRight(out.String(), "\n\n") != expectedOutput {
 		t.Errorf("expected %s to be equal to %s", out.String(), expectedOutput)
@@ -80,7 +80,7 @@ func TestNoTLSv1_0_TEST2(t *testing.T) {
 	var out bytes.Buffer
 	run(in, &out)
 
-	expectedOutput := "Server https://www.facebook.com:443 supports TLS 1.0"
+	expectedOutput := "https://www.facebook.com:443 [TLS 1.0]"
 
 	if strings.TrimRight(out.String(), "\n\n") != expectedOutput {
 		t.Errorf("expected %s to be equal to %s", out.String(), expectedOutput)
