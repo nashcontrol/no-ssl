@@ -1,3 +1,5 @@
+[![codecov](https://codecov.io/gh/nashcontrol/no-ssl/branch/main/graph/badge.svg?token=YBNYVV3ZSJ)](https://codecov.io/gh/nashcontrol/no-ssl)
+
 # no-ssl
 
 Take a list of domains and probes for support of legacy TLS 1.0 and TLS 1.1 protocols.
