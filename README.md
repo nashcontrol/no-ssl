@@ -1,4 +1,4 @@
-[![codecov](https://codecov.io/gh/nashcontrol/no-ssl/branch/main/graph/badge.svg?token=YBNYVV3ZSJ)](https://codecov.io/gh/nashcontrol/no-ssl)
+[![codecov](https://codecov.io/gh/nashcontrol/no-ssl/branch/main/graph/badge.svg?token=YBNYVV3ZSJ)](https://codecov.io/gh/nashcontrol/no-ssl) [![Go Report Card](https://goreportcard.com/badge/github.com/nashcontrol/no-ssl)](https://goreportcard.com/report/github.com/nashcontrol/no-ssl)
 
 # no-ssl
 
