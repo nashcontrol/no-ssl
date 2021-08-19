@@ -35,7 +35,7 @@ func run(in io.Reader, out io.Writer) {
 		}
 
 		// try TLS 1.0 first
-		tlsConfig := no_ssl_config(tls.VersionTLS10)
+		tlsConfig := configTLS(tls.VersionTLS10)
 		conn, err := tls.DialWithDialer(dialer, "tcp", url, tlsConfig)
 
 		if conn != nil {
@@ -46,7 +46,7 @@ func run(in io.Reader, out io.Writer) {
 			fmt.Fprintf(out, "https://%s [TLS 1.0]\n", url)
 		} else {
 			// now try with TLS 1.1
-			tlsConfig = no_ssl_config(tls.VersionTLS11)
+			tlsConfig = configTLS(tls.VersionTLS11)
 			conn, err = tls.DialWithDialer(dialer, "tcp", url, tlsConfig)
 
 			if conn != nil {
@@ -61,7 +61,7 @@ func run(in io.Reader, out io.Writer) {
 	}
 }
 
-func no_ssl_config(version uint16) *tls.Config {
+func configTLS(version uint16) *tls.Config {
 
 	tlsConfig := &tls.Config{
 		InsecureSkipVerify: true,
