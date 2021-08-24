@@ -2,7 +2,7 @@
 
 # no-ssl
 
-Take a list of domains and probes for support of legacy TLS 1.0 and TLS 1.1 protocols.
+Take a list of domains and probes for support of legacy TLS v1.0/TLS v1.1 protocols and certificate expiration checks.
 
 ## Install
 
@@ -19,16 +19,16 @@ no-ssl accepts line-delimited domains (prefixed with HTTPS) on `stdin`. It is be
 example.com
 example.edu
 example.net
-cat domains.txt | httprobe -s -p https:443 | no-ssl
-https://example.com:443 [TLS 1.0]
+▶ cat domains.txt | httprobe -s -p https:443 | no-ssl
+https://example.com:443 [Certificate Expired, TLS 1.0]
 https://example.net:443 [TLS 1.1]
 ```
 
 It is also possibe to run no-ssl directly with the list of targets, but results may be slower as some hosts might not resolve
 
 ```
-cat domains.txt | no-ssl
-https://example.com:443 [TLS 1.0]
+▶ cat domains.txt | no-ssl
+https://example.com:443 [Certificate Expired, TLS 1.0]
 https://example.net:443 [TLS 1.1]
 ```
 
