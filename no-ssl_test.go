@@ -88,7 +88,7 @@ func TestNoTLSv1_0_TEST2(t *testing.T) {
 }
 
 func TestTLSv1_2_TEST1(t *testing.T) {
-	in := strings.NewReader("https://www.ssllabs.com")
+	in := strings.NewReader("https://www.ssllabs.com/")
 	var out bytes.Buffer
 	run(in, &out)
 
@@ -96,5 +96,17 @@ func TestTLSv1_2_TEST1(t *testing.T) {
 
 	if strings.TrimRight(out.String(), "\n\n") != expectedOutput {
 		t.Errorf("expected %s to support TLS 1.2 and tool reply equal to %s", out.String(), expectedOutput)
+	}
+}
+
+func TestTLSv1_0_ExpiredCertificate(t *testing.T) {
+	in := strings.NewReader("https://expired.badssl.com/")
+	var out bytes.Buffer
+	run(in, &out)
+
+	expectedOutput := "https://expired.badssl.com:443 [Certificate Expired, TLS 1.0]"
+
+	if strings.TrimRight(out.String(), "\n\n") != expectedOutput {
+		t.Errorf("expected %s to be equal to %s", out.String(), expectedOutput)
 	}
 }
